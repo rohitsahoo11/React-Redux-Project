@@ -1,7 +1,8 @@
 import './App.css';
 import Create from './components/Create';
 import Navbar from './components/Navbar';
-import { BrowserRouter, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Read from './components/Read';
 // import Read from "./components/Read";
 // import Update from "./components/Update";
 
@@ -10,7 +11,10 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Navbar />
-        <Create />
+        <Routes>
+          <Route exact path='/' element={<Create/>}/>
+          <Route exact path='/read' element={<Read/>}/>
+        </Routes>
       </BrowserRouter>
     </div>
   );
