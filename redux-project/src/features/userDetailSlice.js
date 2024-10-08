@@ -43,6 +43,24 @@ export const showUser = createAsyncThunk("showUser", async (_, { rejectWithValue
 });
 
 
+// Delete Action
+export const deleteUser = createAsyncThunk("deleteUser", async (id, { rejectWithValue }) => {
+    try {
+        const response = await fetch(`https://66fc303cc3a184a84d166424.mockapi.io/crud/${id}`,{
+            method: "DELETE",
+        });
+
+        // Check if the response status is OK
+        if (!response.ok) {
+            throw new Error('Network response was not ok'); // Throw an error if response is not 2xx
+        }
+
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        return rejectWithValue(error.message); // Return the error message for better clarity
+    }
+});
 
 
 export const userDetail = createSlice({
@@ -73,6 +91,22 @@ export const userDetail = createSlice({
             state.users = (action.payload)
         })
         .addCase(showUser.rejected, (state,action)=>{
+            state.loading = false
+            state.error = action.payload
+        })
+        .addCase(deleteUser.pending,(state)=>{
+            state.loading = true
+        })
+        .addCase(deleteUser.fulfilled,(state,action)=>{
+            state.loading = false
+            const {id} = action.payload
+            if(id){
+                state.users = state.users.filter((ele)=> ele.id !== id)
+            }
+            console.log('deleteUser', action.payload);
+            
+        })
+        .addCase(deleteUser.rejected,(state,action)=>{
             state.loading = false
             state.error = action.payload
         })
