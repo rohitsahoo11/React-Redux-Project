@@ -36,7 +36,7 @@ const Read = () => {
                     <h6 className="card-subtitle mb-2 text-body-secondary">{ele.email}</h6>
                     <p className="card-text">{ele.gender}</p>
                     <button href="#" className="card-link" onClick={()=> [setId(ele.id), setShowPopUp(true)]}>View</button>
-                    <Link href="#" className="card-link">Edit</Link>
+                    <Link to={`/edit/${ele.id}`} className="card-link">Edit</Link>
                     <Link onClick={()=> dispatch(deleteUser(ele.id))} className="card-link">Delete</Link>
                 </div>
             </div>
